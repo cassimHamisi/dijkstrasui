@@ -1,5 +1,7 @@
+import 'package:dijkstrasui/screens/image_screen.dart';
 import 'package:dijkstrasui/screens/map_page.dart';
 import 'package:dijkstrasui/screens/screen_list.dart';
+import 'package:dijkstrasui/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -17,11 +19,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _screens = [
     const CityListScreen(),
+    const ImageScreen(),
     const MapPage(),
     const SettingsPage(),
   ];
   final List<Text> _title = [
     const Text("Home"),
+    const Text("Places"),
     const Text("Map"),
     const Text("Settings"),
   ];
@@ -53,6 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 text: "Home",
               ),
               GButton(
+                icon: Icons.image,
+                text: "Route",
+              ),
+              GButton(
                 icon: Icons.map,
                 text: "Map",
               ),
@@ -69,32 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
             },
           ),
         ),
-      ),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'This is the home page',
-      ),
-    );
-  }
-}
-
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'This is the settings page',
       ),
     );
   }
