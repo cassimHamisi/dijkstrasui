@@ -1,7 +1,17 @@
-import 'package:dijkstrasui/screens/map_page.dart';
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-void main() {
+import 'package:dijkstrasui/screens/home.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+FutureOr<void> main() async {
+  // To load the .env file contents into dotenv.
+  //* NOTE: fileName defaults to .env and can be omitted in this case.
+  await dotenv.load(
+    //Name of the file to load
+    fileName: '.env',
+  );
+
   runApp(const MyApp());
 }
 
@@ -12,12 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'School Project',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const MapPage(),
+      home: const MyHomePage(),
     );
   }
 }

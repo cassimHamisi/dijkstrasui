@@ -1,21 +1,29 @@
+import 'dart:async';
+
+import 'package:dijkstrasui/models/environment.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class GoogleWindow extends StatelessWidget {
   final LatLng currentPosition;
-  const GoogleWindow({super.key, required this.currentPosition});
-
-  //Get the default hard coded locations
-  static const LatLng _pGooglePlex =
-      LatLng(37.446950, -122.121120); //Bay shore fwy
-  static const LatLng _pApplePark =
-      LatLng(37.410986369008754, -122.0715872286749); //Silicon valley
+  final Completer<GoogleMapController> mapController;
+  //Map of polygon id and polyLines
+  final Map<PolylineId, Polyline> polyLines;
+  const GoogleWindow({
+    super.key,
+    required this.currentPosition,
+    required this.mapController,
+    required this.polyLines,
+  });
 
   @override
+  @override
   Widget build(BuildContext context) {
-    print('This is the current postiion $currentPosition');
+    print(
+        'This is the current postiion -----------------------------$currentPosition');
     return GoogleMap(
-      initialCameraPosition: CameraPosition(target: currentPosition, zoom: 15),
+      initialCameraPosition: CameraPosition(target: currentPosition, zoom: 13),
+      onMapCreated: ((controller) => mapController.complete(controller)),
       markers: {
         Marker(
           markerId: const MarkerId("_currentLocation"),
@@ -25,14 +33,15 @@ class GoogleWindow extends StatelessWidget {
         const Marker(
           markerId: MarkerId("_sourceLocation"),
           icon: BitmapDescriptor.defaultMarker,
-          position: _pGooglePlex,
+          position: Environment.pWorldObservatory,
         ),
         const Marker(
           markerId: MarkerId("_destinationLocation"),
           icon: BitmapDescriptor.defaultMarker,
-          position: _pApplePark,
+          position: Environment.pCentralPark,
         ),
       },
+      polylines: Set<Polyline>.of(polyLines.values),
     );
   }
 }
