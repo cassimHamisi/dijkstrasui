@@ -1,4 +1,5 @@
 import 'package:dijkstrasui/components/settings/sort_algorithm.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -22,14 +23,18 @@ class _SettingsPageState extends State<SettingsPage> {
     return StreamBuilder(
       stream: treeBloc.treeStream,
       builder: (context, snapshot) {
-        // if (snapshot.hasData) {
-        //   return Center(
-        //     child: ElevatedButton(
-        //       onPressed: () {},
-        //       child: const Text("Start"),
-        //     ),
-        //   );
-        // }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const CupertinoActivityIndicator();
+        } else if (snapshot.hasError) {
+          return Text('Error: ${snapshot.error}');
+        } else if (!snapshot.hasData) {
+          return Center(
+            child: ElevatedButton(
+              onPressed: () {},
+              child: const Text("Start"),
+            ),
+          );
+        }
         return Center(
           child: Container(
             height: 1000,
